@@ -1,0 +1,24 @@
+{
+    "name": "atcoder",
+    "displayName": "Atcoder",
+    "description": "vscode atcoder",
+    "version": "0.0.1",
+    "license": "MIT",
+    "vue": true,
+    "scripts": {
+        "build": "tsc"
+    },
+    "author": {
+        "email": "isseimorita1@gmail.com",
+        "name": "issei morita"
+    },
+    "dependencies": {
+        "@types/node": "^14.14.37",
+        "child_process": "^1.0.2"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.55.0",
+        "tsc": "^1.20150623.0",
+        "typescript": "^4.2.4"
+    }
+}
