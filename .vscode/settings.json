@@ -18,7 +18,7 @@
         "script": "../powertools/lib/test.js",
         "forFile": true,
         "options": {
-          "compiler": "g++ -std=c++17 -I ../../ac-library -fsanitize=address -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC ${activeFile}"
+          "compiler": "nim cpp ${activeFile}"
         }
       },
       "atcoder.submit": {
@@ -27,9 +27,9 @@
         "forFile": true,
         "ifFile": true,
         "options": {
-          "compiler": "g++ -std=c++17 -I ../../ac-library -fsanitize=address -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC ${activeFile}",
+          "compiler": "python ${workspaceRoot}/ac-library-nim/expander.py --lib ${workspaceRoot}/ac-library-nim ${activeFile} && nim cpp ${activeFile}",
           "params": {
-            "unlock-safety": ""
+            "code": "combined.nim"
           }
         }
       }
@@ -57,5 +57,6 @@
         }
       }
     ]
-  }
+  },
+  "python.pythonPath": "/Users/morita1/.pyenv/versions/program-comp/bin/python"
 }
