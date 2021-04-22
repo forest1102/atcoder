@@ -8,10 +8,18 @@
     "cpp": "cd $dir && g++ -std=c++17 -I ../../ac-library -W -fsanitize=address -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC $fileName && ./a.out"
   },
   "ego.power-tools": {
+    "values": { "lang": "nim" },
     "commands": {
       "atcoder.gen": {
         "name": "atcoder.gen",
-        "script": "../powertools/lib/gen.js"
+        "script": "../powertools/lib/gen.js",
+        "options": {
+          "params": [
+            "--workspace ${workspaceRoot}",
+            "--lang ${lang}",
+            "--template ${workspaceRoot}/powertools/atcoder-templates/template_${lang}.txt"
+          ]
+        }
       },
       "atcoder.test": {
         "name": "atcoder.test",
@@ -28,9 +36,7 @@
         "ifFile": true,
         "options": {
           "compiler": "python ${workspaceRoot}/ac-library-nim/expander.py --lib ${workspaceRoot}/ac-library-nim ${activeFile} && nim cpp ${activeFile}",
-          "params": {
-            "code": "combined.nim"
-          }
+          "params": ["--code combined.nim"]
         }
       }
     },

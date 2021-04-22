@@ -10,8 +10,8 @@ export const execute = async (args: any) => {
     })
     if(!input) return 
     const param=args.options?.params||{}
-    param.config='atcodertools.toml'
     const dir=path.join(__dirname,'../')
+    const cmdStr=args.replaceValues(args.options?.params?.join(' '))
     
     const terminal =
       vscode.window.terminals.find(t=>t.name==='atcoder')||
@@ -19,7 +19,7 @@ export const execute = async (args: any) => {
         name: 'atcoder'
       })
     terminal.show(true)
-    terminal.sendText(`cd ${dir} &&atcoder-tools gen ${toCmdParam(param)} ${input}`)
+    terminal.sendText(`cd ${dir} &&atcoder-tools gen ${cmdStr} ${input}`)
   } catch (e) {
     vscode.window.showErrorMessage(e)
   }
