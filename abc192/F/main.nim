@@ -15,28 +15,19 @@ proc nextString(): string =
       if get: break
       get = false
 
-{% if mod %}
-type mint = StaticModInt[{{ mod }}]
-{% endif %}
-{% if yes_str %}
-let YES = "{{ yes_str }}"
-{% endif %}
-{% if no_str %}
-let NO = "{{ no_str }}"
-{% endif %}
 
-{% if prediction_success %}
-proc solve({{ formal_arguments }}):string =
+proc solve(N:int, X:int, A:seq[int]):string =
   discard
-{% endif %}
 
 proc main():void =
-{% if prediction_success %}
-  {{input_part}}
-  echo solve({{ actual_arguments }})
-{% else %}
-# Failed to predict input format
-{% endif %}
+  var N = 0
+    N = nextInt()
+    var X = 0
+    X = nextInt()
+    var A = newSeqWith(N, 0)
+    for i in 0..<N:
+        A[i] = nextInt()
+  echo solve(N, X, A);
   return
 
 main()

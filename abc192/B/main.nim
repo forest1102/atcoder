@@ -15,28 +15,16 @@ proc nextString(): string =
       if get: break
       get = false
 
-{% if mod %}
-type mint = StaticModInt[{{ mod }}]
-{% endif %}
-{% if yes_str %}
-let YES = "{{ yes_str }}"
-{% endif %}
-{% if no_str %}
-let NO = "{{ no_str }}"
-{% endif %}
+let YES = "Yes"
+let NO = "No"
 
-{% if prediction_success %}
-proc solve({{ formal_arguments }}):string =
+proc solve(S:string):string =
   discard
-{% endif %}
 
 proc main():void =
-{% if prediction_success %}
-  {{input_part}}
-  echo solve({{ actual_arguments }})
-{% else %}
-# Failed to predict input format
-{% endif %}
+  var S = ""
+    S = nextString()
+  echo solve(S);
   return
 
 main()
