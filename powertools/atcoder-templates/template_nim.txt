@@ -18,6 +18,7 @@ proc nextString(): string =
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
 {% if mod %}
+import atcoder/modint
 type mint = StaticModInt[{{ mod }}]
 {% endif %}
 {% if yes_str %}
