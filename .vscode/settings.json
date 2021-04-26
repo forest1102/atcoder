@@ -17,8 +17,9 @@
           "params": [
             "--workspace ${workspaceRoot}",
             "--lang ${lang}",
-            "--template ${workspaceRoot}/powertools/atcoder-templates/template_${lang}.txt",
-            "--skip-existing-problems"
+            "--template ${workspaceRoot}/powertools/atcoder-templates/template.${lang}",
+            "--skip-existing-problems",
+            "--config ${workspaceRoot}/powertools/atcodertools.toml"
           ]
         }
       },

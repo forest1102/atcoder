@@ -14,6 +14,16 @@ proc nextString(): string =
     else:
       if get: break
       get = false
+template cfor(init, comp, incr, body: untyped) =
+  block:
+    init
+    while comp:
+      body
+      incr
+
+template times(n: int, body: untyped) =
+  for _ in 0..<n:
+    body
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 

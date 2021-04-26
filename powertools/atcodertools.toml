@@ -1,3 +1,2 @@
 [codestyle]
-workspace_dir = '../'
-template_file = './atcoder-templates/template_cpp.txt'
+indent_width = 2
