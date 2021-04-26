@@ -1,11 +1,18 @@
-let n = 11
+template cfor(init, comp, incr, body: untyped) =
+  block:
+    init
+    while comp:
+      body
+      incr
 
-let b =
-    case n:
-    of 1:
-        "one"
-    of 2:
-        "two"
-    else:
-        "others"
-echo b
+template times(n: int, body: untyped) =
+  for _ in 0..<n:
+    body
+
+proc main(): void =
+  cfor((var i = 0), i*i <= 100, inc(i)):
+    echo i
+  10.times:
+    echo "hello"
+
+main()
