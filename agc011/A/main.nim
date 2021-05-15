@@ -1,4 +1,4 @@
-import sequtils, strutils, tables, bitops
+import sequtils, strutils, sugar, algorithm
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
 proc nextInt(): int = scanf("%lld", addr result)
@@ -29,40 +29,29 @@ template times(n: int, body: untyped) =
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
-import atcoder/modint
-type mint = StaticModInt[200]
-let YES = "Yes"
-let NO = "No"
 
-proc solve(N: int, A: seq[int]): void =
-  var k = min(N, 8)
-  var t: array[200, seq[int]]
-  var output = proc (bit: int): string =
-    var res: seq[int]
-    for i in 0..<k:
-      if bit.testBit(i):
-        res.add(i + 1)
-    return $(res.len()) & " " & res.join(" ")
-  for bit in 1..<(1 shl k):
-    var cur_sum: mint
-    for i in 0..<k:
-      if bit.testBit(i):
-        cur_sum += A[i]
-    t[cur_sum.val()].add(bit)
-    if t[cur_sum.val()].len >= 2:
-      echo YES
-      echo output(t[cur_sum.val][0])
-      echo output(t[cur_sum.val][1])
-      return
-  echo NO
+proc solve(N: int, C: int, K: int, T: var seq[int]): int =
+  T.sort()
+  var i = 0
+  while i < N:
+    let r = T[i] + K
+    C.times:
+      if i >= N or T[i] > r:
+        break
+      inc(i)
+    inc(result)
 
 proc main(): void =
   var N = 0
   N = nextInt()
-  var A = newSeqWith(N, 0)
+  var C = 0
+  C = nextInt()
+  var K = 0
+  K = nextInt()
+  var T = newSeqWith(N, 0)
   for i in 0..<N:
-    A[i] = nextInt() mod 200
-  solve(N, A)
+    T[i] = nextInt()
+  echo solve(N, C, K, T)
   return
 
 main()

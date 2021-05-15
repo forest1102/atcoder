@@ -1,4 +1,4 @@
-import sequtils, strutils, tables, bitops
+import sequtils, strutils, math
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
 proc nextInt(): int = scanf("%lld", addr result)
@@ -23,46 +23,39 @@ template cfor(init, comp, incr, body: untyped) =
 template `max=`(x, y) = x = max(x, y)
 template `min=`(x, y) = x = min(x, y)
 
+
 template times(n: int, body: untyped) =
   for _ in 0..<n:
     body
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
-import atcoder/modint
-type mint = StaticModInt[200]
-let YES = "Yes"
-let NO = "No"
+proc solve(N: int, P: int, cnts: array[2, int]): int =
+  var com = newSeqWith(cnts[1] + 1, newSeqWith(cnts[1] + 1, 0))
+  com[0][0] = 1
+  for i in 1..cnts[1]:
+    com[i][0] = 1
+    for j in 1..cnts[1]:
+      com[i][j] = (com[i - 1][j - 1] + com[i - 1][j])
+  if P == 0:
+    for i in countup(0, 2 * (cnts[1] div 2), 2):
+      result += com[cnts[1]][i]
+  else:
+    if cnts[1] > 0:
+      for i in countup(1, 2 * ((cnts[1] - 1) div 2) + 1, 2):
+        result += com[cnts[1]][i]
+  result *= 2 ^ cnts[0]
 
-proc solve(N: int, A: seq[int]): void =
-  var k = min(N, 8)
-  var t: array[200, seq[int]]
-  var output = proc (bit: int): string =
-    var res: seq[int]
-    for i in 0..<k:
-      if bit.testBit(i):
-        res.add(i + 1)
-    return $(res.len()) & " " & res.join(" ")
-  for bit in 1..<(1 shl k):
-    var cur_sum: mint
-    for i in 0..<k:
-      if bit.testBit(i):
-        cur_sum += A[i]
-    t[cur_sum.val()].add(bit)
-    if t[cur_sum.val()].len >= 2:
-      echo YES
-      echo output(t[cur_sum.val][0])
-      echo output(t[cur_sum.val][1])
-      return
-  echo NO
 
 proc main(): void =
   var N = 0
   N = nextInt()
-  var A = newSeqWith(N, 0)
+  var P = 0
+  P = nextInt()
+  var cnts = [0, 0]
   for i in 0..<N:
-    A[i] = nextInt() mod 200
-  solve(N, A)
+    inc(cnts[nextInt() mod 2])
+  echo solve(N, P, cnts)
   return
 
 main()

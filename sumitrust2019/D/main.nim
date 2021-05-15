@@ -1,4 +1,4 @@
-import sequtils, strutils, tables, bitops
+import sequtils, strutils, algorithm
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
 proc nextInt(): int = scanf("%lld", addr result)
@@ -29,40 +29,39 @@ template times(n: int, body: untyped) =
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
-import atcoder/modint
-type mint = StaticModInt[200]
-let YES = "Yes"
-let NO = "No"
 
-proc solve(N: int, A: seq[int]): void =
-  var k = min(N, 8)
-  var t: array[200, seq[int]]
-  var output = proc (bit: int): string =
-    var res: seq[int]
-    for i in 0..<k:
-      if bit.testBit(i):
-        res.add(i + 1)
-    return $(res.len()) & " " & res.join(" ")
-  for bit in 1..<(1 shl k):
-    var cur_sum: mint
-    for i in 0..<k:
-      if bit.testBit(i):
-        cur_sum += A[i]
-    t[cur_sum.val()].add(bit)
-    if t[cur_sum.val()].len >= 2:
-      echo YES
-      echo output(t[cur_sum.val][0])
-      echo output(t[cur_sum.val][1])
-      return
-  echo NO
+proc solve(N: int, S: string): int =
+  const dig_range = '0'..'9'
+  var table: array['0'..'9', seq[int]]
+  for i, c in S.pairs:
+    table[c].add(i)
+
+
+  for d1 in dig_range:
+    for d2 in dig_range:
+      for d3 in dig_range:
+
+        if table[d1].len == 0:
+          continue
+        let i1 = table[d1][0]
+
+        if table[d2].len == 0 or table[d2][^1] <= i1:
+          continue
+
+        let i2 = table[d2][table[d2].upperBound(i1)]
+
+        if table[d3].len == 0 or table[d3][^1] <= i2:
+          continue
+
+        inc(result)
+
 
 proc main(): void =
   var N = 0
   N = nextInt()
-  var A = newSeqWith(N, 0)
-  for i in 0..<N:
-    A[i] = nextInt() mod 200
-  solve(N, A)
+  var S = ""
+  S = nextString()
+  echo solve(N, S)
   return
 
 main()

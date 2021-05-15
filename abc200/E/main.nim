@@ -55,22 +55,37 @@ proc count_num(S, L: int): int =
   var
     sign = 1
     c = 1
-  for i in 0..(S div (L+1)):
+  for i in 0..min((S div (L+1)), 3):
     if i == 1 or i == 2:
       c = 3
-    else:
+    elif i == 0 or i == 3:
       c = 1
+    else:
+      c = 0
     result += sign * c * (S - i * (L + 1) + 2).C2()
     sign *= -1
 
 proc solve(N: var int, K: var int): seq[int] =
   result = newSeqWith(3, 0)
-  var S = 0
-  while K >= 0:
-    K -= count_num(S, N)
-    inc(S)
-  S += 2
+  var S = 3 * N
+  var f = 0
+  for k in 0..(3 * N + 3):
+    f += count_num(k, N - 1)
+    if f > K:
+      S = k - 1
+      f -= count_num(k, N - 1)
+      break
   echo S
+  var c = 0
+  var g = 0
+  for k in 0..<N:
+    g += min(S - k + 1, 2 * N - 1 - S + k)
+    if f + g >= K:
+      c = k
+      break
+  echo c
+
+
 
 
 
