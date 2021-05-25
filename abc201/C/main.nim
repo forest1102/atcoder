@@ -1,4 +1,4 @@
-import sequtils, strutils, sugar
+import sequtils, strutils, sugar, tables, sets
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
 proc nextInt(): int = scanf("%lld", addr result)
@@ -30,21 +30,43 @@ template times(n: int, body: untyped) =
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
 
-proc solve(N: var int): int =
-  if N mod 2 == 1:
+proc solve(S: string): int =
+  var t: array[3, HashSet[int]]
+  for i, c in S.pairs:
+    case c
+    of 'o':
+      t[0].incl(i)
+    of '?':
+      t[1].incl(i)
+    of 'x':
+      t[2].incl(i)
+    else:
+      discard
+  if t[0].len > 4:
     return 0
+  let digs = (0..9).toSeq.toHashSet() - t[2]
+  for d1 in digs:
+    for d2 in digs:
+      for d3 in digs:
+        for d4 in digs:
+          var good = true
+          for i in t[0]:
+            if i notin {d1, d2, d3, d4}:
+              good = false
+              break
+          if good:
+            inc(result)
 
-  result += N div 10
-  N = N div 10
-  var d = 5
-  while N >= d:
-    result += (N div d)
-    d *= 5
+
+
+
+
+
 
 proc main(): void =
-  var N = 0
-  N = nextInt()
-  echo solve(N)
+  var S = ""
+  S = nextString()
+  echo solve(S)
   return
 
 main()

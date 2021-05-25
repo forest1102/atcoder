@@ -30,21 +30,13 @@ template times(n: int, body: untyped) =
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
 
-proc solve(N: var int): int =
-  if N mod 2 == 1:
-    return 0
-
-  result += N div 10
-  N = N div 10
-  var d = 5
-  while N >= d:
-    result += (N div d)
-    d *= 5
+proc solve(a: int, b: int, c: int): int = 21 - a - b - c
 
 proc main(): void =
-  var N = 0
-  N = nextInt()
-  echo solve(N)
+  var a = nextInt()
+  var b = nextInt()
+  var c = nextInt()
+  echo solve(a, b, c)
   return
 
 main()

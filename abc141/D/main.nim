@@ -29,22 +29,29 @@ template times(n: int, body: untyped) =
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
+import atcoder/extra/structure/internal_heapqueue
 
-proc solve(N: var int): int =
-  if N mod 2 == 1:
-    return 0
+proc solve(N: int, M: int, A: seq[int]): int =
+  var q: HeapQueue[int, proc(a, b: int): bool = a > b]
+  for a in A:
+    q.push(a)
 
-  result += N div 10
-  N = N div 10
-  var d = 5
-  while N >= d:
-    result += (N div d)
-    d *= 5
+  M.times:
+    let a = q.pop()
+    q.push(a div 2)
+
+  while q.len > 0:
+    result += q.pop()
 
 proc main(): void =
   var N = 0
   N = nextInt()
-  echo solve(N)
+  var M = 0
+  M = nextInt()
+  var A = newSeqWith(N, 0)
+  for i in 0..<N:
+    A[i] = nextInt()
+  echo solve(N, M, A)
   return
 
 main()

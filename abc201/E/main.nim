@@ -1,8 +1,8 @@
-import sequtils, strutils, sugar
+import sequtils,strutils,sugar
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
-proc nextInt(): int = scanf("%lld", addr result)
-proc nextFloat(): float = scanf("%lf", addr result)
+proc nextInt(): int = scanf("%lld",addr result)
+proc nextFloat(): float = scanf("%lf",addr result)
 proc nextString(): string =
   var get = false
   result = ""
@@ -29,22 +29,23 @@ template times(n: int, body: untyped) =
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
+import atcoder/modint
+type mint = StaticModInt[1000000007]
 
-proc solve(N: var int): int =
-  if N mod 2 == 1:
-    return 0
+proc solve(N:int, u:seq[int], v:seq[int], w:seq[int]):string =
+  discard
 
-  result += N div 10
-  N = N div 10
-  var d = 5
-  while N >= d:
-    result += (N div d)
-    d *= 5
-
-proc main(): void =
+proc main():void =
   var N = 0
   N = nextInt()
-  echo solve(N)
+  var u = newSeqWith(N-1, 0)
+  var v = newSeqWith(N-1, 0)
+  var w = newSeqWith(N-1, 0)
+  for i in 0..<N-1:
+    u[i] = nextInt()
+    v[i] = nextInt()
+    w[i] = nextInt()
+  echo solve(N, u, v, w)
   return
 
 main()

@@ -7,3 +7,6 @@ node_modules
 combined.nim
 in_*.txt
 out_*.txt
+
+**/in/**/*.txt
+**/out/**/*.txt

@@ -1,4 +1,4 @@
-import sequtils, strutils, sugar
+import sequtils, strutils, algorithm
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
 proc nextInt(): int = scanf("%lld", addr result)
@@ -29,22 +29,24 @@ template times(n: int, body: untyped) =
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
+let YES = "Yes"
+let NO = "No"
 
-proc solve(N: var int): int =
-  if N mod 2 == 1:
-    return 0
-
-  result += N div 10
-  N = N div 10
-  var d = 5
-  while N >= d:
-    result += (N div d)
-    d *= 5
+proc solve(A: var seq[int]): string =
+  if A[0] == A[1] and A[1] == A[2]:
+    return YES
+  if A[2] - A[1] == A[1] - A[0]:
+    return YES
+  while A.nextPermutation():
+    if A[2] - A[1] == A[1] - A[0]:
+      return YES
+  return NO
 
 proc main(): void =
-  var N = 0
-  N = nextInt()
-  echo solve(N)
+  var A = newSeqWith(3, 0)
+  for i in 0..<3:
+    A[i] = nextInt()
+  echo solve(A)
   return
 
 main()

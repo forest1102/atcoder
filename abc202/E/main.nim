@@ -29,22 +29,25 @@ template times(n: int, body: untyped) =
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
+import atcoder/extra/graph/graph_template
 
-proc solve(N: var int): int =
-  if N mod 2 == 1:
-    return 0
+proc solve(N: int, P: seq[int], Q: int, U: seq[int], D: seq[int]): string =
+  var g = initGraph[int](N)
+  for src, dst in P:
+    g.addBiEdge(src + 1, dst)
 
-  result += N div 10
-  N = N div 10
-  var d = 5
-  while N >= d:
-    result += (N div d)
-    d *= 5
+
 
 proc main(): void =
-  var N = 0
-  N = nextInt()
-  echo solve(N)
+  var N = nextInt()
+  var P = newSeqWith(N-2+1, nextInt() - 1)
+  var Q = nextInt()
+  var U = newSeqWith(Q, 0)
+  var D = newSeqWith(Q, 0)
+  for i in 0..<Q:
+    U[i] = nextInt() - 1
+    D[i] = nextInt()
+  echo solve(N, P, Q, U, D)
   return
 
 main()

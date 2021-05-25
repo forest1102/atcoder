@@ -1,4 +1,4 @@
-import sequtils, strutils, sugar
+import sequtils, strutils, sugar, tables, algorithm
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
 proc nextInt(): int = scanf("%lld", addr result)
@@ -30,21 +30,20 @@ template times(n: int, body: untyped) =
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
 
-proc solve(N: var int): int =
-  if N mod 2 == 1:
-    return 0
-
-  result += N div 10
-  N = N div 10
-  var d = 5
-  while N >= d:
-    result += (N div d)
-    d *= 5
+proc solve(N: int, table: var seq[tuple[t: int, s: string]]): string =
+  table.sort(system.cmp, order = Descending)
+  return table[1].s
 
 proc main(): void =
   var N = 0
   N = nextInt()
-  echo solve(N)
+  var table = newSeqWith(N, (t: 0, s: ""))
+  for i in 0..<N:
+    let
+      s = nextString()
+      t = nextInt()
+    table[i] = ((t: t, s: s))
+  echo solve(N, table)
   return
 
 main()
