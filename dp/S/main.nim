@@ -20,7 +20,8 @@ template cfor(init, comp, incr, body: untyped) =
     while comp:
       body
       incr
-import atcoder/extra/other/max_min_operator
+template `max=`(x, y) = x = max(x, y)
+template `min=`(x, y) = x = min(x, y)
 
 template times(n: int, body: untyped) =
   for _ in 0..<n:
@@ -28,29 +29,16 @@ template times(n: int, body: untyped) =
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
-{% if mod %}
 import atcoder/modint
-type mint = StaticModInt[{{ mod }}]
-{% endif %}
-{% if yes_str %}
-let YES = "{{ yes_str }}"
-{% endif %}
-{% if no_str %}
-let NO = "{{ no_str }}"
-{% endif %}
+type mint = StaticModInt[1000000007]
 
-{% if prediction_success %}
-proc solve({{ formal_arguments }}):string =
+proc solve(K:string, D:int):string =
   discard
-{% endif %}
 
 proc main():void =
-{% if prediction_success %}
-  {{input_part}}
-  echo solve({{ actual_arguments }})
-{% else %}
-# Failed to predict input format
-{% endif %}
+  var K = nextString()
+  var D = nextInt()
+  echo solve(K, D)
   return
 
 main()
