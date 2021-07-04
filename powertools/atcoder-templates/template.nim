@@ -23,11 +23,14 @@ template cfor(init, comp, incr, body: untyped) =
 template `max=`(x, y) = x = max(x, y)
 template `min=`(x, y) = x = min(x, y)
 
+import atcoder/extra/other/warlus_operator
+
 template times(n: int, body: untyped) =
   for _ in 0..<n:
     body
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
+proc `ceilDiv`[T: SomeInteger](x, y: T): T = x div y + ord(x mod y != 0)
 
 {% if mod %}
 import atcoder/modint
