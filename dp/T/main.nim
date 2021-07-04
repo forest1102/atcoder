@@ -30,10 +30,25 @@ template times(n: int, body: untyped) =
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
 
 import atcoder/modint
+import atcoder/extra/dp/cumulative_sum
 type mint = StaticModInt[1000000007]
 
-proc solve(N:int, s:string):string =
-  discard
+proc solve(N:int, s:string):mint =
+  var dp = newSeqWith(N, newSeqWith(N, mint(0)))
+
+  for j in 0..<N:
+    dp[0][j] = 1
+
+  for i in 1..<N:
+    var cumsum = initCumulativeSum(dp[i - 1])
+    for less in 0..<(N-i):
+      if s[i - 1] == '<':
+        dp[i][less] = cumsum[0..less]
+      else:
+        dp[i][less] = cumsum[(less+1)..<N]
+  return dp[N - 1][0]
+
+
 
 proc main():void =
   var N = nextInt()
