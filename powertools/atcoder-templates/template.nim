@@ -23,8 +23,6 @@ template cfor(init, comp, incr, body: untyped) =
 import atcoder/extra/other/max_min_operator
 import atcoder/extra/other/warlus_operator
 
-import atcoder/extra/other/warlus_operator
-
 template times(n: int, body: untyped) =
   for _ in 0..<n:
     body
