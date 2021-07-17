@@ -20,41 +20,40 @@ template cfor(init, comp, incr, body: untyped) =
     while comp:
       body
       incr
-import atcoder/extra/other/max_min_operator
-import atcoder/extra/other/warlus_operator
-
-import atcoder/extra/other/warlus_operator
+template `max=`(x, y) = x = max(x, y)
+template `min=`(x, y) = x = min(x, y)
 
 template times(n: int, body: untyped) =
   for _ in 0..<n:
     body
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
-proc `ceilDiv`[T: SomeInteger](x, y: T): T = x div y + ord(x mod y != 0)
 
-{% if mod %}
 import atcoder/modint
-type mint = StaticModInt[{{ mod }}]
-{% endif %}
-{% if yes_str %}
-let YES = "{{ yes_str }}"
-{% endif %}
-{% if no_str %}
-let NO = "{{ no_str }}"
-{% endif %}
+import atcoder/extra/dp/cumulative_sum
+type mint = StaticModInt[1000000007]
 
-{% if prediction_success %}
-proc solve({{ formal_arguments }}):string =
-  discard
-{% endif %}
+proc solve(N:int, s:string):mint =
+  var dp = newSeqWith(N, newSeqWith(N, mint(0)))
+
+  for j in 0..<N:
+    dp[0][j] = 1
+
+  for i in 1..<N:
+    var cumsum = initCumulativeSum(dp[i - 1])
+    for less in 0..<(N-i):
+      if s[i - 1] == '<':
+        dp[i][less] = cumsum[0..less]
+      else:
+        dp[i][less] = cumsum[(less+1)..<N]
+  return dp[N - 1][0]
+
+
 
 proc main():void =
-{% if prediction_success %}
-  {{input_part}}
-  echo solve({{ actual_arguments }})
-{% else %}
-# Failed to predict input format
-{% endif %}
+  var N = nextInt()
+  var s = nextString()
+  echo solve(N, s)
   return
 
 main()

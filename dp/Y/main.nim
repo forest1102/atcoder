@@ -20,41 +20,31 @@ template cfor(init, comp, incr, body: untyped) =
     while comp:
       body
       incr
-import atcoder/extra/other/max_min_operator
-import atcoder/extra/other/warlus_operator
-
-import atcoder/extra/other/warlus_operator
+template `max=`(x, y) = x = max(x, y)
+template `min=`(x, y) = x = min(x, y)
 
 template times(n: int, body: untyped) =
   for _ in 0..<n:
     body
 
 proc `$` [T](x: seq[T]): string = x.mapIt($it).join(" ")
-proc `ceilDiv`[T: SomeInteger](x, y: T): T = x div y + ord(x mod y != 0)
 
-{% if mod %}
 import atcoder/modint
-type mint = StaticModInt[{{ mod }}]
-{% endif %}
-{% if yes_str %}
-let YES = "{{ yes_str }}"
-{% endif %}
-{% if no_str %}
-let NO = "{{ no_str }}"
-{% endif %}
+type mint = StaticModInt[1000000007]
 
-{% if prediction_success %}
-proc solve({{ formal_arguments }}):string =
+proc solve(H:int, W:int, N:int, r:seq[int], c:seq[int]):string =
   discard
-{% endif %}
 
 proc main():void =
-{% if prediction_success %}
-  {{input_part}}
-  echo solve({{ actual_arguments }})
-{% else %}
-# Failed to predict input format
-{% endif %}
+  var H = nextInt()
+  var W = nextInt()
+  var N = nextInt()
+  var r = newSeqWith(N, 0)
+  var c = newSeqWith(N, 0)
+  for i in 0..<N:
+    r[i] = nextInt()
+    c[i] = nextInt()
+  echo solve(H, W, N, r, c)
   return
 
 main()

@@ -1,11 +1,11 @@
 {
- "code_filename": "main.cpp",
+ "code_filename": "main.nim",
  "judge": {
   "diff": 1e-09,
   "error_type": "relative",
   "judge_type": "decimal"
  },
- "lang": "cpp",
+ "lang": "nim",
  "problem": {
   "alphabet": "J",
   "contest": {

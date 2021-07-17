@@ -38,7 +38,11 @@
         "ifFile": true,
         "options": {
           "compiler": "python ${workspaceRoot}/ac-library-nim/expander.py --lib ${workspaceRoot}/ac-library-nim ${activeFile} && nim cpp ${activeFile}",
-          "params": ["--code combined.nim", "-u"]
+          "params": [
+            "--code combined.nim",
+            "-u"
+            //  "-f"
+          ]
         }
       }
     },
