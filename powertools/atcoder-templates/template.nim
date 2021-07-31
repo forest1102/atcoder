@@ -1,4 +1,4 @@
-import sequtils,strutils,sugar
+import sequtils,strutils,sugar, algorithm, tables
 proc scanf(formatstr: cstring){.header: "<stdio.h>", varargs.}
 proc getchar(): char {.header: "<stdio.h>", varargs.}
 proc nextInt(): int = scanf("%lld",addr result)
@@ -20,7 +20,8 @@ template cfor(init, comp, incr, body: untyped) =
     while comp:
       body
       incr
-import atcoder/extra/other/max_min_operator
+template `max=`*(x,y:typed):void = x = max(x,y)
+template `min=`*(x,y:typed):void = x = min(x,y)
 import atcoder/extra/other/warlus_operator
 
 template times(n: int, body: untyped) =
