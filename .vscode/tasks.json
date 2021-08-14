@@ -1,0 +1,85 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "options": {
+    "env": {
+      "lang": "nim"
+    }
+  },
+  "tasks": [
+    {
+      "label": "generate",
+      "type": "shell",
+      "command": "atcoder-tools",
+      "args": [
+        "gen",
+        "--workspace",
+        "${workspaceFolder}",
+        "--lang",
+        "${lang}",
+        "--template",
+        "${workspaceRoot}/powertools/atcoder-templates/template.${lang}",
+        "--skip-existing-problems",
+        "--config",
+        "${workspaceFolder}/powertools/atcodertools.toml",
+        "${input:contestId}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "nim cpp ${file}",
+      "options": {
+        "cwd": "${fileDirname}",
+        "statusbar": {
+          "hide": true
+        }
+      }
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "dependsOn": ["build"],
+      "command": "atcoder-tools",
+      "args": ["test"],
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    },
+    {
+      "label": "combine",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/ac-library-nim/expander.py",
+        "--lib",
+        "${workspaceFolder}/ac-library-nim",
+        "${file}"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    },
+    {
+      "label": "submit",
+      "type": "shell",
+      "dependsOn": ["combine", "build"],
+      "command": "atcoder-tools",
+      "args": ["submit", "-u", "--code", "combined.nim", "-e", "./main"],
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "contestId",
+      "type": "promptString",
+      "description": "コンテストID"
+    }
+  ]
+}
