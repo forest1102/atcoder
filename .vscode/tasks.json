@@ -19,10 +19,10 @@
         "--lang",
         "${lang}",
         "--template",
-        "${workspaceRoot}/powertools/atcoder-templates/template.${lang}",
+        "${workspaceRoot}/.atcoder-setting/atcoder-templates/template.${lang}",
         "--skip-existing-problems",
         "--config",
-        "${workspaceFolder}/powertools/atcodertools.toml",
+        "${workspaceFolder}/.atcoder-setting/atcodertools.toml",
         "${input:contestId}"
       ],
       "options": {
