@@ -1,6 +1,3 @@
-[submodule "ac-library"]
-	path = ac-library
-	url = https://github.com/atcoder/ac-library.git
 [submodule "ac-library-nim"]
 	path = ac-library-nim
 	url = https://github.com/zer0-star/Nim-ACL.git
