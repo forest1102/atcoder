@@ -48,8 +48,21 @@
       ],
       "command": "atcoder-tools",
       "args": [
-        "test"
+        "test",
+        "-e",
+        "./main"
       ],
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    },
+    {
+      "label": "exec",
+      "type": "shell",
+      "dependsOn": [
+        "build"
+      ],
+      "command": "./main",
       "options": {
         "cwd": "${fileDirname}"
       }
@@ -72,6 +85,10 @@
       "label": "submit",
       "type": "shell",
       "command": "atcoder-tools",
+      "dependsOn":[
+        "combine",
+        "build"
+      ],
       "args": [
         "submit",
         "-u",
