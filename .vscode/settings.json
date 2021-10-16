@@ -7,33 +7,18 @@
     "c": "cd $dir && gcc $fileName&& ./a.out",
     "cpp": "cd $dir && g++ -std=c++17 -I ../../ac-library -W -fsanitize=address -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC $fileName && ./a.out"
   },
-  "yaml.customTags": [
-    "!And",
-    "!And sequence",
-    "!If",
-    "!If sequence",
-    "!Not",
-    "!Not sequence",
-    "!Equals",
-    "!Equals sequence",
-    "!Or",
-    "!Or sequence",
-    "!FindInMap",
-    "!FindInMap sequence",
-    "!Base64",
-    "!Join",
-    "!Join sequence",
-    "!Cidr",
-    "!Ref",
-    "!Sub",
-    "!Sub sequence",
-    "!GetAtt",
-    "!GetAZs",
-    "!ImportValue",
-    "!ImportValue sequence",
-    "!Select",
-    "!Select sequence",
-    "!Split",
-    "!Split sequence"
-  ]
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/archives/**": true
+  },
+  "[dockerfile]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.formatOnSave": false
+  },
+
 }

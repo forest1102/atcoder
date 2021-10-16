@@ -1,6 +1,7 @@
 *
 !**/
 !*.*
+!dockerfile
 .DS_Store
 node_modules
 *.out
@@ -10,3 +11,4 @@ out_*.txt
 
 **/in/**/*.txt
 **/out/**/*.txt
+secrets

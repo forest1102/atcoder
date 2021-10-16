@@ -1,0 +1,13 @@
+version: '3'
+services:
+  development:
+    build: ./
+    tty: true
+    volumes:
+      - .:/workspace
+    secrets:
+      - atcoder_secrets
+
+secrets:
+  atcoder_secrets:
+    file: secrets/atcoder-user.txt
