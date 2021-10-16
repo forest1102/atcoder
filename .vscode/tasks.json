@@ -17,9 +17,9 @@
         "--workspace",
         "${workspaceFolder}",
         "--lang",
-        "${lang}",
+        "${env:lang}",
         "--template",
-        "${workspaceRoot}/.atcoder-setting/atcoder-templates/template.${lang}",
+        "${workspaceRoot}/.atcoder-setting/atcoder-templates/template.${env:lang}",
         "--skip-existing-problems",
         "--config",
         "${workspaceFolder}/.atcoder-setting/atcodertools.toml",
@@ -43,9 +43,13 @@
     {
       "label": "test",
       "type": "shell",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "command": "atcoder-tools",
-      "args": ["test"],
+      "args": [
+        "test"
+      ],
       "options": {
         "cwd": "${fileDirname}"
       }
@@ -67,9 +71,15 @@
     {
       "label": "submit",
       "type": "shell",
-      "dependsOn": ["combine", "build"],
       "command": "atcoder-tools",
-      "args": ["submit", "-u", "--code", "combined.nim", "-e", "./main"],
+      "args": [
+        "submit",
+        "-u",
+        "--code",
+        "combined.nim",
+        "-e",
+        "./main"
+      ],
       "options": {
         "cwd": "${fileDirname}"
       }
